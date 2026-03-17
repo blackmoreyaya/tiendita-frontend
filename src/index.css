@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+/* Opcional: un fondo grisecito para que parezca app de celular */
+body {
+  background-color: #f3f4f6;
+}
