@@ -29,8 +29,12 @@ function App() {
     cargarProductos();
   }, []);
 
-  const registrarVenta = (productoId) => {
-    const datosVenta = { producto_id: productoId, cantidad: 1 };
+  const registrarVenta = (productoId, esMuestra = false) => {
+    const datosVenta = { 
+      producto_id: productoId, 
+      cantidad: 1,
+      es_muestra: esMuestra
+    };
     axios.post("/ventas/", datosVenta)
       // axios.post('https://arfily-backend.onrender.com/ventas/', datosVenta)
       .then(() => 
@@ -234,17 +238,33 @@ function App() {
                     </div>
                   )}
 
-                  <button
-                    onClick={() => registrarVenta(producto.id)}
-                    disabled={producto.stock === 0}
-                    className={`px-5 py-3 rounded-xl font-bold transition-transform active:scale-95 ${
-                      producto.stock === 0
-                        ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                        : "bg-green-100 text-green-700 hover:bg-green-200"
-                    }`}
-                  >
-                    Vender 1
-                  </button>
+                  <div className="flex flex-col gap-2">
+            {/* Botón normal de Venta */}
+            <button 
+              onClick={() => registrarVenta(producto.id, false)}
+              disabled={producto.stock === 0}
+              className={`px-5 py-2 rounded-xl font-bold transition-transform active:scale-95 ${
+                producto.stock === 0 
+                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
+                  : 'bg-green-100 text-green-700 hover:bg-green-200'
+              }`}
+            >
+              💰 Vender 1
+            </button>
+
+            {/* NUEVO Botón de Muestra */}
+            <button 
+              onClick={() => registrarVenta(producto.id, true)}
+              disabled={producto.stock === 0}
+              className={`px-5 py-2 rounded-xl font-bold transition-transform active:scale-95 border-2 ${
+                producto.stock === 0 
+                  ? 'border-gray-200 text-gray-400 cursor-not-allowed' 
+                  : 'border-purple-300 text-purple-600 hover:bg-purple-50'
+              }`}
+            >
+              Muestra 1
+            </button>
+          </div>
             </div>
           ))}
         </ul>
